@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.container {
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 280px);
+  max-width: 1440px;
+}
