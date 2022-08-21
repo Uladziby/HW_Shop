@@ -2,7 +2,7 @@ export const base_url = 'https://api.escuelajs.co/api/v1/products'
 
 
 export async function getAllProducts() {
-    const response = await fetch(base_url+'?offset=0&limit=10');
+    const response = await fetch(base_url+'?offset=0&limit=12');
     const data = await response.json();
     return data;
 }

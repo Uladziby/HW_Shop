@@ -54,3 +54,12 @@
 .navlink:hover{
     color: #66999b;
 }
+
+.basket{
+    display: flex;
+    flex: 2 1;
+    align-items: center;
+    justify-content: center;
+    color: #66999b;
+    font-size: 2rem;
+}

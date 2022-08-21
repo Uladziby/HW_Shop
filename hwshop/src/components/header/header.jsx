@@ -1,12 +1,22 @@
+import { useEffect } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { CartContext } from "../common/CartProvider";
 import { routes } from "../common/constants";
 import styles from "./styles.module.css";
 
-const HeaderComponent = ({ setShowChatbar, showChatbar }) => {
+const HeaderComponent = () => {
+  const cartContext = useContext(CartContext);
+  
   let activeStyle = {
     textDecoration: "underline",
-    color : '#66999b'
+    color: "#66999b",
   };
+
+  const [myCart, setMyCart] = useState({ items: 0, total: 0 });
+  useEffect(() => {
+    setMyCart(cartContext.myCart);
+  }, [cartContext]);
 
   return (
     <header className={styles.header}>
@@ -21,19 +31,13 @@ const HeaderComponent = ({ setShowChatbar, showChatbar }) => {
           </NavLink>
           <NavLink
             className={styles.navlink}
-            to={routes.Detail}
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            {routes.Detail}
-          </NavLink>
-          <NavLink
-            className={styles.navlink}
             to={routes.About}
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
-         >
-            {routes.About}
+          >
+            About Us
           </NavLink>
         </div>
+        <div className={styles.basket}>{`items${myCart.items} total:${myCart.total}$`}</div>
         <button type="button" className={styles.btn_chat}>
           Login
         </button>

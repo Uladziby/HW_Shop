@@ -30,6 +30,7 @@
   font-size: 2rem;
   font-weight: bold;
   text-decoration: none;
+  color: black;
 }
 .card_title:hover {
   color: white;

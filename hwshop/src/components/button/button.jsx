@@ -1,8 +1,8 @@
-import styles from "./styles.module";
+import styles from "./styles.module.css";
 
-export const Button = ({ text, onClick, type, styleButton, disabled = false }) => {
+export const Button = ({ text, onClick, type, style, disabled = false }) => {
   return (
-    <button className={styles.btn_primary} onClick={onClick} type={type} disabled={disabled}>
+    <button style={{...style}} className={styles.btn_primary} onClick={onClick} type={type} disabled={disabled}>
       {text}
     </button>
   );

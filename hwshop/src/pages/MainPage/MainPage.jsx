@@ -14,15 +14,10 @@ const initialProduct = {
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
-
   useEffect(() => {
-    getAllProducts()
-      .then((data) => {
-        setProducts(data);
-      })
-      .finally(() => {
-        console.log(products);
-      });
+    getAllProducts().then((data) => {
+      setProducts(data);
+    });
   }, []);
 
   return (
