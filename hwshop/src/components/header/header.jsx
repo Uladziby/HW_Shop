@@ -1,22 +1,26 @@
-import { useEffect } from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { CartContext } from "../common/CartProvider";
+import { AppContext } from "../common/AppProvider";
 import { routes } from "../common/constants";
 import styles from "./styles.module.css";
 
-const HeaderComponent = () => {
-  const cartContext = useContext(CartContext);
-  
+const HeaderComponent = ({ setShowModal }) => {
+  const appContext = useContext(AppContext);
+
+  const [myCart, setMyCart] = useState({ items: 0, total: 0 });
+
+  const showModal = () => {
+    appContext.user.name ? appContext.setCurrUser("", "") : setShowModal(true);
+  };
+
+  useEffect(() => {
+    setMyCart(appContext.myCart);
+  }, [appContext]);
+
   let activeStyle = {
     textDecoration: "underline",
     color: "#66999b",
   };
-
-  const [myCart, setMyCart] = useState({ items: 0, total: 0 });
-  useEffect(() => {
-    setMyCart(cartContext.myCart);
-  }, [cartContext]);
 
   return (
     <header className={styles.header}>
@@ -37,9 +41,13 @@ const HeaderComponent = () => {
             About Us
           </NavLink>
         </div>
-        <div className={styles.basket}>{`items${myCart.items} total:${myCart.total}$`}</div>
-        <button type="button" className={styles.btn_chat}>
-          Login
+
+        <div
+          style={{ visibility: appContext.user.name ? "visible" : "hidden" }}
+          className={styles.basket}
+        >{`items: ${myCart.items} total: ${myCart.total}$`}</div>
+        <button type="button" className={styles.btn_chat} onClick={showModal}>
+          {appContext.user.name ? "Logout" : "Login"}
         </button>
       </div>
       <div className={styles.header__bottom}></div>

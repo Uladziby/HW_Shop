@@ -2,12 +2,24 @@
   display: flex;
   flex: 1;
   justify-content: center;
+  flex-direction: column;
 }
 
 .container {
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   display: grid;
-  grid-template-columns: repeat(4, 280px);
-  max-width: 1440px;
+  grid-template-columns: repeat(5, auto);
+  justify-self: center;
+  max-height: 86vh;
+  overflow: auto;
+}
+.main_error_msg {
+  font-size: 3rem;
+  color: rgb(255, 44, 44);
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+.show_err {
+  opacity: 1;
 }

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAllProducts } from "../../components/api/api";
 import CardComponent from "../../components/card/card";
 import styles from "./styles.module.css";
@@ -12,8 +11,9 @@ const initialProduct = {
   title: "",
 };
 
-const MainPage = () => {
-  const [products, setProducts] = useState([]);
+const MainPage = ({ handlerShowNotification }) => {
+  const [products, setProducts] = useState([{ ...initialProduct }]);
+
   useEffect(() => {
     getAllProducts().then((data) => {
       setProducts(data);
@@ -23,8 +23,8 @@ const MainPage = () => {
   return (
     <div className={styles.main}>
       <div className={styles.container}>
-        {products.map((item) => {
-          return <CardComponent key={item.id} item={item} />;
+        {products.map((item, idx) => {
+          return <CardComponent key={idx} item={item} showNotification={handlerShowNotification} />;
         })}
       </div>
     </div>

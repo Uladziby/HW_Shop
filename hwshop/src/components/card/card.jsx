@@ -3,15 +3,16 @@ import { useRef } from "react";
 import styles from "./styles.module.css";
 import basket from "../../assets/basket.png";
 import { Link } from "react-router-dom";
-import { CartContext } from "../common/CartProvider";
+import { AppContext } from "../common/AppProvider";
 
-const CardComponent = ({ item: { price, title, images, category, id } }) => {
+const CardComponent = ({ item: { price, title, images, category, id }, showNotification }) => {
   const card = useRef();
-  const cartContext = useContext(CartContext);
+  const appContext = useContext(AppContext);
+
   const handlerAddToCart = () => {
-    console.log(cartContext);
-    cartContext.setCart(1, price)
+    appContext.user.name ? appContext.setCart(1, price) : showNotification(true);
   };
+
   useEffect(() => {
     card.current.style.backgroundImage = `url(${category.image})`;
   }, [category.image]);
@@ -27,7 +28,7 @@ const CardComponent = ({ item: { price, title, images, category, id } }) => {
       <div className={styles.block_btn}>
         <div className={styles.card_price}>Price : {price}</div>
         <button className={styles.btn_price} onClick={handlerAddToCart}>
-          <img src={basket} alt="basket" width={30} />
+          <img src={basket} alt="cart" width={30} />
         </button>
       </div>
     </div>

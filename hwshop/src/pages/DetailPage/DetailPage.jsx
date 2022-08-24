@@ -2,12 +2,12 @@ import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import { getProduct } from "../../components/api/api";
 import { Button } from "../../components/button/button";
-import { CartContext } from "../../components/common/CartProvider";
+import { AppContext } from "../../components/common/AppProvider";
 import styles from "./styles.module.css";
 
-const DetailPage = () => {
+const DetailPage = ({ handlerShowNotification }) => {
   const params = useParams();
-  const cartContext = useContext(CartContext);
+  const appContext = useContext(AppContext);
 
   const [detailInfo, setDetailInfo] = useState({
     title: "",
@@ -28,7 +28,9 @@ const DetailPage = () => {
   };
 
   const handlerAddToCart = () => {
-    cartContext.setCart(quantity, detailInfo.price);
+    appContext.user.name
+      ? appContext.setCart(quantity, detailInfo.price)
+      : handlerShowNotification(true);
   };
 
   return (
@@ -37,7 +39,7 @@ const DetailPage = () => {
         <div className={styles.detail_content}>
           <div className={styles.detail_content_left}>
             {detailInfo.images.map((el, idx) => {
-              return <img key={idx} src={el} alt="img_product" />;
+              return <img key={idx} src={el} alt="img_product" height={400} />;
             })}
           </div>
           <div className={styles.detail_content_right}>
