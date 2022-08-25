@@ -20,12 +20,13 @@ const initialProduct = {
 };
 
 const MainPage = ({ handlerShowNotification }) => {
-  const [products, setProducts] = useState([{ ...initialProduct }]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getAllProducts().then((data) => {
+    getAllProducts()
+    .then((data) => {
       setProducts(data);
-    });
+    })
   }, []);
 
   return (

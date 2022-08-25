@@ -10,6 +10,7 @@ import AboutPage from "./pages/AboutPage/AboutPage";
 import DetailPage from "./pages/DetailPage/DetailPage";
 import MainPage from "./pages/MainPage/MainPage";
 import { routes } from "./components/common/constants";
+import { ErrorBoundary } from "./components/common/ErrorBoundary";
 
 function App() {
   const [isShowModal, setShowModal] = useState(false);
@@ -22,7 +23,7 @@ function App() {
   const handlerCloseModal = () => {
     setShowModal(false);
   };
-  
+
   const handlerShowNotification = (value) => {
     showNotification(value);
   };
@@ -31,19 +32,21 @@ function App() {
     <div className="App">
       <AppProvider>
         <HeaderComponent setShowModal={openModal} />
-        <Routes>
-          <Route
-            path="/"
-            element={<MainPage handlerShowNotification={handlerShowNotification} />}
-            exact
-          />
-          <Route
-            path={routes.Detail + "/:id"}
-            element={<DetailPage handlerShowNotification={handlerShowNotification} />}
-          ></Route>
-          <Route path={routes.About} element={<AboutPage />}></Route>
-          <Route path="*" element={<NotFoundPage />}></Route>
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            <Route
+              path="/"
+              element={<MainPage handlerShowNotification={handlerShowNotification} />}
+              exact
+            />
+            <Route
+              path={routes.Detail + "/:id"}
+              element={<DetailPage handlerShowNotification={handlerShowNotification} />}
+            ></Route>
+            <Route path={routes.About} element={<AboutPage />}></Route>
+            <Route path="*" element={<NotFoundPage />}></Route>
+          </Routes>
+        </ErrorBoundary>
         <FooterComponent
           handlerShowNotification={handlerShowNotification}
           isShowNotification={isShowNotification}
