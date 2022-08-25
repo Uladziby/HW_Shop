@@ -12,8 +12,9 @@ const DetailPage = ({ handlerShowNotification }) => {
   const [detailInfo, setDetailInfo] = useState({
     title: "",
     description: "",
-    images: [],
-    category: { name: "" },
+    image: '' ,
+    category: '',
+    id:'',
   });
   const [quantity, setQuantity] = useState(0);
 
@@ -38,9 +39,10 @@ const DetailPage = ({ handlerShowNotification }) => {
       <div className={styles.detail}>
         <div className={styles.detail_content}>
           <div className={styles.detail_content_left}>
-            {detailInfo.images.map((el, idx) => {
+           {/*  {detailInfo.images.map((el, idx) => {
               return <img key={idx} src={el} alt="img_product" height={400} />;
-            })}
+            })} */}
+            <img src={detailInfo.image} alt="img_product" height={400} />;
           </div>
           <div className={styles.detail_content_right}>
             <h2 className={styles.detail_title}>{detailInfo.title}</h2>

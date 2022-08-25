@@ -1,16 +1,16 @@
 .container_detail {
-  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex: 1;
+  width: 80%;
 }
 .detail {
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
-  width: 80%;
 }
 .detail_title {
   font-size: 3rem;

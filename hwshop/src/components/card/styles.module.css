@@ -9,8 +9,10 @@
   cursor: pointer;
   background-size: cover;
   background-repeat: no-repeat;
+  height: 350px;
+  width: 300px;
+  background-color: white;
 }
-
 .block_imgs {
   height: 70%;
   width: 100%;
@@ -19,6 +21,7 @@
 .img {
   height: 100%;
   width: 100%;
+  max-height: 220px;
 }
 
 .block_btn {
@@ -31,9 +34,10 @@
   font-weight: bold;
   text-decoration: none;
   color: black;
+  padding: 1rem;
 }
 .card_title:hover {
-  color: white;
+  color: #66999b;
 }
 .btn_price:hover {
   transform: scale(1.3);

@@ -3,10 +3,18 @@ import { getAllProducts } from "../../components/api/api";
 import CardComponent from "../../components/card/card";
 import styles from "./styles.module.css";
 
-const initialProduct = {
+/* const initialProduct = {
   category: { id: 0, name: "", image: "" },
   description: "",
   images: [],
+  price: 0,
+  title: "",
+}; */
+
+const initialProduct = {
+  category: '',
+  description: "",
+  images: '',
   price: 0,
   title: "",
 };

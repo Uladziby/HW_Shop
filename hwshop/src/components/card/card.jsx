@@ -5,7 +5,7 @@ import basket from "../../assets/basket.png";
 import { Link } from "react-router-dom";
 import { AppContext } from "../common/AppProvider";
 
-const CardComponent = ({ item: { price, title, images, category, id }, showNotification }) => {
+const CardComponent = ({ item: { price, title, image, category, id }, showNotification }) => {
   const card = useRef();
   const appContext = useContext(AppContext);
 
@@ -13,9 +13,9 @@ const CardComponent = ({ item: { price, title, images, category, id }, showNotif
     appContext.user.name ? appContext.setCart(1, price) : showNotification(true);
   };
 
-  useEffect(() => {
-    card.current.style.backgroundImage = `url(${category.image})`;
-  }, [category.image]);
+/*   useEffect(() => {
+    card.current.style.backgroundImage = `url(${image})`;
+  }, [image]); */
 
   return (
     <div ref={card} className={styles.custom_card}>
@@ -23,7 +23,7 @@ const CardComponent = ({ item: { price, title, images, category, id }, showNotif
         {title}
       </Link>
       <div className={styles.block_imgs}>
-        <img className={styles.img} src={`${images[0]}`} alt="product" />
+        <img className={styles.img} src={`${image}`} alt="product"  width={200} height={100}/>
       </div>
       <div className={styles.block_btn}>
         <div className={styles.card_price}>Price : {price}</div>
