@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { getAllProducts } from "../../components/api/api";
+import { getAllProducts } from "../../api/api";
 import CardComponent from "../../components/card/card";
 import styles from "./styles.module.css";
+import React  from 'react';
 
 const initialProduct = {
   category: '',

@@ -1,12 +1,13 @@
-import { Button } from "../../button/button";
-import InputComponent from "../../input/InputComponent";
+import { Button } from "../button/button";
+import InputComponent from "../input/InputComponent";
 import ReactDOM from "react-dom";
 import { useContext, useState } from "react";
 import styles from "./styles.module.css";
-import { AppContext } from "../AppProvider";
-import icon_close from "../../../assets/close_icon.png";
-import { mock_user } from "../mock";
-import { novalid_msg } from "../constants";
+import { AppContext } from "../../common/AppProvider";
+import icon_close from "../../assets/close_icon.png";
+import { mock_user } from "../../common/mock";
+import { novalid_msg } from "../../common/constants";
+import React  from 'react';
 
 const LoginModalTemplate = ({ closeModal }) => {
   const [name, setName] = useState(mock_user.name);

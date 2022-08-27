@@ -1,16 +1,17 @@
 import "./App.css";
 import FooterComponent from "./components/header/footer";
 import HeaderComponent from "./components/header/header";
-import { AppProvider } from "./components/common/AppProvider";
+import { AppProvider } from "./common/AppProvider";
 import { useState } from "react";
-import LoginModal from "./components/common/modal/LoginModal";
+import LoginModal from "./components/modal/LoginModal";
 import { Route, Routes } from "react-router";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import DetailPage from "./pages/DetailPage/DetailPage";
 import MainPage from "./pages/MainPage/MainPage";
-import { routes } from "./components/common/constants";
-import { ErrorBoundary } from "./components/common/ErrorBoundary";
+import { routes } from "./common/constants";
+import { ErrorBoundary } from "./common/ErrorBoundary";
+import React  from 'react';
 
 function App() {
   const [isShowModal, setShowModal] = useState(false);
@@ -43,8 +44,8 @@ function App() {
               path={routes.Detail + "/:id"}
               element={<DetailPage handlerShowNotification={handlerShowNotification} />}
             ></Route>
-            <Route path={routes.About} element={<AboutPage />}></Route>
-            <Route path="*" element={<NotFoundPage />}></Route>
+            <Route path={routes.About} element={<AboutPage />}/>
+            <Route path="*" element={<NotFoundPage />}/>
           </Routes>
         </ErrorBoundary>
         <FooterComponent

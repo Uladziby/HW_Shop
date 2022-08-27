@@ -3,7 +3,9 @@ import { useRef } from "react";
 import styles from "./styles.module.css";
 import basket from "../../assets/basket.png";
 import { Link } from "react-router-dom";
-import { AppContext } from "../common/AppProvider";
+import { AppContext } from "../../common/AppProvider";
+import React  from 'react';
+
 
 const CardComponent = ({ item: { price, title, image, category, id }, showNotification }) => {
   const card = useRef();

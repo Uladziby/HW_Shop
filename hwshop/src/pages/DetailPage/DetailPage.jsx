@@ -1,9 +1,10 @@
 import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
-import { getProduct } from "../../components/api/api";
+import { getProduct } from "../../api/api";
 import { Button } from "../../components/button/button";
-import { AppContext } from "../../components/common/AppProvider";
+import { AppContext } from "../../common/AppProvider";
 import styles from "./styles.module.css";
+import React  from 'react';
 
 const DetailPage = ({ handlerShowNotification }) => {
   const params = useParams();

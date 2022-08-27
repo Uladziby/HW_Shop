@@ -1,8 +1,9 @@
 import { useContext} from "react";
 import { NavLink } from "react-router-dom";
-import { AppContext } from "../common/AppProvider";
-import { routes } from "../common/constants";
+import { AppContext } from "../../common/AppProvider";
+import { routes } from "../../common/constants";
 import styles from "./styles.module.css";
+import React  from 'react';
 
 const HeaderComponent = ({ setShowModal }) => {
   const {myCart, user, setCurrUser} = useContext(AppContext);

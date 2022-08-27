@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { err_msg } from "../common/constants";
+import { err_msg } from "../../common/constants";
 import styles from "./styles.module.css";
+import React  from 'react';
 
 const TIME_SHOWING_ERROR = 10000;
 
