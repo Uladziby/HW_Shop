@@ -1,21 +1,15 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext} from "react";
 import { NavLink } from "react-router-dom";
 import { AppContext } from "../common/AppProvider";
 import { routes } from "../common/constants";
 import styles from "./styles.module.css";
 
 const HeaderComponent = ({ setShowModal }) => {
-  const appContext = useContext(AppContext);
-
-  const [myCart, setMyCart] = useState({ items: 0, total: 0 });
+  const {myCart, user, setCurrUser} = useContext(AppContext);
 
   const showModal = () => {
-    appContext.user.name ? appContext.setCurrUser("", "") : setShowModal(true);
+    user.name ? setCurrUser("", "") : setShowModal(true);
   };
-
-  useEffect(() => {
-    setMyCart(appContext.myCart);
-  }, [appContext]);
 
   let activeStyle = {
     textDecoration: "underline",
@@ -43,11 +37,11 @@ const HeaderComponent = ({ setShowModal }) => {
         </div>
 
         <div
-          style={{ visibility: appContext.user.name ? "visible" : "hidden" }}
+          style={{ visibility: user.name ? "visible" : "hidden" }}
           className={styles.basket}
         >{`items: ${myCart.items} total: ${myCart.total}$`}</div>
         <button type="button" className={styles.btn_chat} onClick={showModal}>
-          {appContext.user.name ? "Logout" : "Login"}
+          {user.name ? "Logout" : "Login"}
         </button>
       </div>
       <div className={styles.header__bottom}></div>
