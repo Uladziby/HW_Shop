@@ -3,7 +3,8 @@ import FooterComponent from "./components/header/footer";
 import HeaderComponent from "./components/header/header";
 import { AppProvider } from "./common/AppProvider";
 import { useState } from "react";
-import LoginModal from "./components/modal/LoginModal";
+import {LoginModal} from "./components/modal/LoginModal";
+import {LoginModalRx} from "./components/modal/LoginModal";
 import { Route, Routes } from "react-router";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
@@ -12,6 +13,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import { routes } from "./common/constants";
 import { ErrorBoundary } from "./common/ErrorBoundary";
 import React  from 'react';
+import { CartModal } from "./components/modal/CartModal/CartModal";
 
 function App() {
   const [isShowModal, setShowModal] = useState(false);
@@ -53,6 +55,7 @@ function App() {
           isShowNotification={isShowNotification}
         />
         <LoginModal handlerCloseModal={handlerCloseModal} isShowModal={isShowModal} />
+        <CartModal />
       </AppProvider>
     </div>
   );

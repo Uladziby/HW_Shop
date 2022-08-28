@@ -1,3 +1,5 @@
+/** @format */
+
 import { Button } from "../button/button";
 import InputComponent from "../input/InputComponent";
 import ReactDOM from "react-dom";
@@ -7,24 +9,22 @@ import { AppContext } from "../../common/AppProvider";
 import icon_close from "../../assets/close_icon.png";
 import { mock_user } from "../../common/mock";
 import { novalid_msg } from "../../common/constants";
-import React  from 'react';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/reducers/userSlice";
 
 const LoginModalTemplate = ({ closeModal }) => {
   const [name, setName] = useState(mock_user.name);
   const [password, setPassword] = useState(mock_user.password);
-  const appContext = useContext(AppContext);
   const [isValidate, setIsValidate] = useState(false);
+  const dispatch = useDispatch();
 
-  const handlerCloseModal = (e) => {
-    e.preventDefault();
-    closeModal();
-  };
   const handlerSubmit = (e) => {
     e.preventDefault();
     if (name !== mock_user.name || password !== mock_user.password) {
       return setIsValidate(true);
     }
-    appContext.setCurrUser(name, password);
+    dispatch(login({ name, password }));
     closeModal();
   };
 
@@ -35,7 +35,7 @@ const LoginModalTemplate = ({ closeModal }) => {
           <h3>Your Account</h3>
         </div>
         {isValidate && <div className={styles.error_msg}>{novalid_msg}</div>}
-        <button className={styles.close_btn} onClick={handlerCloseModal}>
+        <button className={styles.close_btn} onClick={()=>closeModal()}>
           <img src={icon_close} alt="close" width={30} />
         </button>
         <form className={styles.form} onSubmit={handlerSubmit}>
@@ -53,7 +53,7 @@ const LoginModalTemplate = ({ closeModal }) => {
           />
           <div className={styles.form_btns}>
             <Button text={"Sign in"} styleButton={"primary"} type="submit" />
-            <Button text={"Cancel"} styleButton={"add"} onClick={handlerCloseModal} />
+            <Button text={"Cancel"} styleButton={"add"} onClick={()=>closeModal()} />
           </div>
         </form>
       </div>
@@ -61,7 +61,7 @@ const LoginModalTemplate = ({ closeModal }) => {
   );
 };
 
-const LoginModal = ({ isShowModal, handlerCloseModal }) => {
+export const LoginModal = ({ isShowModal, handlerCloseModal }) => {
   const closeModal = () => {
     handlerCloseModal();
   };
@@ -70,5 +70,3 @@ const LoginModal = ({ isShowModal, handlerCloseModal }) => {
     return ReactDOM.createPortal(<LoginModalTemplate closeModal={closeModal} />, rootNode);
   }
 };
-
-export default LoginModal;

@@ -5,19 +5,19 @@ import basket from "../../assets/basket.png";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../common/AppProvider";
 import React  from 'react';
+import { useDispatch } from "react-redux";
+import { addItem } from "../../redux/reducers/cartSlice";
 
 
-const CardComponent = ({ item: { price, title, image, category, id }, showNotification }) => {
+const CardComponent = ({ item , showNotification }) => {
   const card = useRef();
   const appContext = useContext(AppContext);
-
+  const dispatch = useDispatch();
+  const  { price, title, image, category, id } = item;
   const handlerAddToCart = () => {
     appContext.user.name ? appContext.setCart(1, price) : showNotification(true);
+    dispatch(addItem({...item, amount : 1}))
   };
-
-/*   useEffect(() => {
-    card.current.style.backgroundImage = `url(${image})`;
-  }, [image]); */
 
   return (
     <div ref={card} className={styles.custom_card}>
