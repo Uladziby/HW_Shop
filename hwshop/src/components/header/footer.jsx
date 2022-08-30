@@ -1,14 +1,22 @@
+/** @format */
+
 import { useEffect } from "react";
 import { err_msg } from "../../common/constants";
 import styles from "./styles.module.css";
-import React  from 'react';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { notifyLogin } from "../../redux/reducers/mainSlice";
 
 const TIME_SHOWING_ERROR = 10000;
 
-const FooterComponent = ({ isShowNotification, handlerShowNotification }) => {
+const FooterComponent = () => {
+  const dispatch = useDispatch();
+  const isShowNotification = useSelector((state) => state.main.showNotificationMsg);
+
+  //useEffect срабатывает 4 раза
   useEffect(() => {
     setTimeout(() => {
-      handlerShowNotification(false);
+      dispatch(notifyLogin(false));
     }, TIME_SHOWING_ERROR);
   }, [isShowNotification]);
 

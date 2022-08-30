@@ -1,3 +1,5 @@
+/** @format */
+
 :root {
   --color-primary: #2b3a67;
   --color-additional: #ffffff;
@@ -46,7 +48,6 @@
   line-height: 125%;
   cursor: pointer;
   transition: transform 0.3s ease;
-  height: 5rem;
   width: 160px;
   color: #2b3a67;
   background-color: #ffffff;

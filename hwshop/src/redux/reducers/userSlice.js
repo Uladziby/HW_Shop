@@ -1,12 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllProducts } from "../../api/api";
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     name: "",
     password: "",
 }
-
 
 const userSlice = createSlice({
     name: 'userSlice',

@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllProducts } from "../../api/api";
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isShowModalCart: false,
@@ -28,39 +26,48 @@ const cartSlice = createSlice({
             state.isShowModalCart = false;
         },
         addItem(state, { payload }) {
-            console.log(payload)
+            let isExistItem = false;
             if (state.items.length === 0) {
                 state.items = [...state.items, payload];
             }
             else {
                 state.items.map((el) => {
                     if (el.id === payload.id) {
-                        console.log('true')
                         el.amount += payload.amount;
+                        isExistItem = true;
                     }
                 })
-                console.log('else')
-                //state.items = [...state.items, payload];
+                if (!isExistItem) {
+                    state.items = [...state.items, payload];
+                }
             }
-
             state.totalPrice += payload.price * payload.amount;
             state.amountItems += payload.amount;
         },
         removeItem(state, { payload }) {
             state.items = state.items.filter(item => item.id !== payload);
+            state.amountItems = 0;
+            state.totalPrice = 0;
+            state.items.map(el => {
+                state.amountItems += el.amount;
+                state.totalPrice += (el.amount * el.price);
+            });
         },
         increaseAmount(state, { payload }) {
             state.items.map((el) => {
                 if (el.id === payload) {
                     el.amount++;
+                    state.totalPrice += el.price;
+                    state.amountItems++;
                 }
             })
-
         },
         reduceAmount(state, { payload }) {
             state.items.map((el) => {
                 if (el.id === payload) {
                     el.amount--;
+                    state.totalPrice -= el.price;
+                    state.amountItems--;
                 }
             })
         },
@@ -69,7 +76,6 @@ const cartSlice = createSlice({
             state.amountItems = 0;
             state.totalPrice = 0;
         }
-
     },
 
 })

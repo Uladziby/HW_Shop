@@ -13,9 +13,10 @@ import {
   reduceAmount,
   removeItem,
 } from "../../../redux/reducers/cartSlice";
+import { cartSelector } from "../../../redux/selectors";
 
 const ModalTemplate = ({ closeModal }) => {
-  const items = useSelector((state) => state.cart.items);
+  const {items} = useSelector(cartSelector);
   const dispatch = useDispatch();
 
   const handlerCloseModal = (e) => {
@@ -59,7 +60,7 @@ const ModalTemplate = ({ closeModal }) => {
                   -
                 </button>
               </div>
-              <div className={styles.grid_item}>{el.amount * el.price}</div>
+              <div className={styles.grid_item}>{(el.amount * el.price).toFixed(2)}</div>
               <div className={styles.grid_item}>
                 <button className={styles.btn_amount} onClick={() => dispatch(removeItem(el.id))}>
                   X
@@ -69,7 +70,7 @@ const ModalTemplate = ({ closeModal }) => {
           ))}
         </div>
         <div className={styles.grid_btns}>
-          <Button disabled={true} text={"Order and Pay"} />
+          <Button disabled={true} style={{ background: "grey" }} text={"Order and Pay"} />
           <Button text={"Clear a cart"} onClick={() => dispatch(clearCart())} />
           <Button text={"Cancel"} style={{ background: "brown" }} onClick={handlerCloseModal} />
         </div>
@@ -79,7 +80,7 @@ const ModalTemplate = ({ closeModal }) => {
 };
 
 export const CartModal = () => {
-  const { isShowModalCart } = useSelector((state) => state.cart);
+  const { isShowModalCart } = useSelector(cartSelector);
   const dispatch = useDispatch();
 
   const closeModal = () => {

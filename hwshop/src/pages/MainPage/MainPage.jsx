@@ -1,47 +1,50 @@
+/** @format */
+
 import { useState, useEffect } from "react";
-import { getAllProducts } from "../../api/api";
 import CardComponent from "../../components/card/card";
 import styles from "./styles.module.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, setProducts } from "../../redux/reducers/mainSlice";
-import { useLayoutEffect } from "react";
+import { fetchProducts } from "../../redux/reducers/mainSlice";
+import { mainSelector } from "../../redux/selectors";
+import { getAllProducts } from "../../api/api";
+import { LOAD_MORE } from "../../common/constants";
 
-const initialProduct = {
-  category: "",
-  description: "",
-  images: "",
-  price: 0,
-  title: "",
-};
-const LIMIT_ON_PAGE = 10;
-const MainPage = ({ handlerShowNotification }) => {
-  const [limitItems, setLimitItems] = useState(LIMIT_ON_PAGE);
+const INIT_LIMIT = 10;
+const ITEMS_ON_ROW = 5;
+
+const MainPage = () => {
   const [isLoadMore, setLoadMore] = useState(true);
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.main.products);
+  const [limit, setLimit] = useState(INIT_LIMIT);
+  const [maxItems, setMaxLimit] = useState(0);
 
-  useLayoutEffect(() => {
-    dispatch(fetchProducts(limitItems));
-  }, [limitItems]);
+  const dispatch = useDispatch();
+  const { products } = useSelector(mainSelector);
+
+  useEffect(() => {
+    getAllProducts().then((val) => setMaxLimit(val));
+    dispatch(fetchProducts(limit));
+    if (limit === maxItems) setLoadMore(false);
+  }, [limit]);
 
   const handlerLimitItems = () => {
-    const rowItems = 5;
-    setLimitItems((prev) => prev + rowItems);
-    if (limitItems > products.length) {
-      setLoadMore(false);
-    }
+    setLimit((prev) => prev + ITEMS_ON_ROW);
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.container}>
         {products.map((item, idx) => {
-          return <CardComponent key={idx} item={item} showNotification={handlerShowNotification} />;
+          return <CardComponent key={idx} item={item} />;
         })}
       </div>
-      <button disabled={!isLoadMore} onClick={handlerLimitItems}>
-        Show more products
+      <button
+        disabled={!isLoadMore}
+        className={styles.btn_load}
+        style={{ width: "100%", background: `${isLoadMore ? "#66999b" : "grey"}` }}
+        onClick={() => handlerLimitItems()}
+      >
+        {LOAD_MORE}
       </button>
     </div>
   );

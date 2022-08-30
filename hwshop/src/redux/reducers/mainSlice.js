@@ -4,7 +4,9 @@ import { getAllProducts } from "../../api/api";
 
 const initialState = {
     products: [],
-    loading : false,
+    loading: false,
+    showNotificationMsg: false,
+    isShowModalLogin: false,
 }
 
 
@@ -13,7 +15,6 @@ export const fetchProducts = createAsyncThunk(
     async (limit, { rejectWithValue }) => {
         try {
             const resp = getAllProducts(limit);
-            console.log(resp)
             return resp
         }
         catch (error) {
@@ -27,20 +28,26 @@ const mainSlice = createSlice({
     name: 'mainSlice',
     initialState,
     reducers: {
-        setProducts(state, action) {
-            state.products = [...state.products, ...action.payload];
-        }
+        notifyLogin(state, { payload }) {
+            state.showNotificationMsg = payload;
+        },
+        showModalLogin(state, { payload }) {
+            state.isShowModalLogin = payload;
+        },
     },
-    extraReducers : {
-        [fetchProducts.pending] : (state)=>{
+    extraReducers: {
+        [fetchProducts.pending]: (state) => {
             state.loading = true;
         },
-        [fetchProducts.fulfilled]: (state, action)=>{
+        [fetchProducts.fulfilled]: (state, {payload}) => {
             state.loading = false;
-            state.products = action.payload
+            state.products = payload;
+        },
+        [fetchProducts.rejected]: (state) => {
+            state.loading = false;
         }
     }
 })
 
 export default mainSlice.reducer;
-export const { setProducts } = mainSlice.actions 
+export const { setProducts, notifyLogin, showModalLogin, setLimitOnPage } = mainSlice.actions 

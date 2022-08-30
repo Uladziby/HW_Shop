@@ -1,23 +1,29 @@
-import { useState, useContext, useEffect } from "react";
+/** @format */
+
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { getProduct } from "../../api/api";
 import { Button } from "../../components/button/button";
-import { AppContext } from "../../common/AppProvider";
 import styles from "./styles.module.css";
-import React  from 'react';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../redux/reducers/cartSlice";
+import { userSelector } from "../../redux/selectors";
+import { notifyLogin } from "../../redux/reducers/mainSlice";
 
-const DetailPage = ({ handlerShowNotification }) => {
+const DetailPage = () => {
   const params = useParams();
-  const appContext = useContext(AppContext);
-
   const [detailInfo, setDetailInfo] = useState({
-    title: "",
-    description: "",
-    image: "",
     category: "",
+    description: "",
     id: "",
+    image: "",
+    price: 0,
+    title: "",
   });
   const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
+  const { name } = useSelector(userSelector);
 
   useEffect(() => {
     getProduct(params.id).then((res) => {
@@ -30,9 +36,7 @@ const DetailPage = ({ handlerShowNotification }) => {
   };
 
   const handlerAddToCart = () => {
-    appContext.user.name
-      ? appContext.setCart(quantity, detailInfo.price)
-      : handlerShowNotification(true);
+    name ? dispatch(addItem({ ...detailInfo, amount: quantity })) : dispatch(notifyLogin(true));
   };
 
   return (
@@ -40,10 +44,7 @@ const DetailPage = ({ handlerShowNotification }) => {
       <div className={styles.detail}>
         <div className={styles.detail_content}>
           <div className={styles.detail_content_left}>
-            {/*  {detailInfo.images.map((el, idx) => {
-              return <img key={idx} src={el} alt="img_product" height={400} />;
-            })} */}
-            <img src={detailInfo.image} alt="img_product" height={400} />;
+            {<img src={detailInfo.image} alt="img_product" height={400} />}
           </div>
           <div className={styles.detail_content_right}>
             <h2 className={styles.detail_title}>{detailInfo.title}</h2>
