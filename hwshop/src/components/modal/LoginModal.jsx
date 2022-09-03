@@ -12,6 +12,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/reducers/userSlice";
 import { showModalLogin } from "../../redux/reducers/mainSlice";
+import { mainSelector } from "../../redux/selectors";
 
 const LoginModalTemplate = () => {
   const [name, setName] = useState(mock_user.name);
@@ -66,7 +67,7 @@ const LoginModalTemplate = () => {
 };
 
 export const LoginModal = () => {
-  const isShowModalLogin = useSelector((state) => state.main.isShowModalLogin);
+  const { isShowModalLogin } = useSelector(mainSelector);
   const dispatch = useDispatch();
   const closeModal = () => {
     dispatch(showModalLogin(false));

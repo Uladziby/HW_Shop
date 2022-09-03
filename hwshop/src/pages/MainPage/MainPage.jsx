@@ -7,7 +7,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../redux/reducers/mainSlice";
 import { mainSelector } from "../../redux/selectors";
-import { getAllProducts } from "../../api/api";
 import { LOAD_MORE } from "../../common/constants";
 
 const INIT_LIMIT = 10;
@@ -22,9 +21,9 @@ const MainPage = () => {
   const { products } = useSelector(mainSelector);
 
   useEffect(() => {
-    getAllProducts().then((val) => setMaxLimit(val));
     dispatch(fetchProducts(limit));
-    if (limit === maxItems) setLoadMore(false);
+    setMaxLimit(products.length);
+    setLoadMore(() => !(products.length - maxItems === ITEMS_ON_ROW));
   }, [limit]);
 
   const handlerLimitItems = () => {

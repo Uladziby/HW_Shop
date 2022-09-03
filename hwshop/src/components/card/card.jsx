@@ -5,13 +5,15 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/reducers/cartSlice";
 import { notifyLogin } from "../../redux/reducers/mainSlice";
+import { userSelector } from "../../redux/selectors";
 
 const CardComponent = ({ item }) => {
   const dispatch = useDispatch();
-  const { name } = useSelector((state) => state.user);
+  const { name } = useSelector(userSelector);
 
   const { price, title, image, id } = item;
   const handlerAddToCart = () => {
+    
     name ? dispatch(addItem({ ...item, amount: 1 })) : dispatch(notifyLogin(true));
   };
 

@@ -49,15 +49,15 @@ const ModalTemplate = ({ closeModal }) => {
               <div className={styles.grid_item}>{el.title}</div>
               <div className={styles.grid_item}>{el.price}</div>
               <div className={styles.grid_item}>
+                <button className={styles.btn_amount} onClick={() => dispatch(reduceAmount(el.id))}>
+                  -
+                </button>
+                <span style={{ fontSize: "20px" }}>{el.amount}</span>
                 <button
                   className={styles.btn_amount}
                   onClick={() => dispatch(increaseAmount(el.id))}
                 >
                   +
-                </button>
-                <span style={{ fontSize: "20px" }}>{el.amount}</span>
-                <button className={styles.btn_amount} onClick={() => dispatch(reduceAmount(el.id))}>
-                  -
                 </button>
               </div>
               <div className={styles.grid_item}>{(el.amount * el.price).toFixed(2)}</div>

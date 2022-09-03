@@ -1,24 +1,14 @@
 export const base_url = 'https://fakestoreapi.com/products'
-//export const base_url = 'https://api.escuelajs.co/api/v1/categories'
 
 export async function getAllProducts(limit) {
     let response;
     try {
-        if (!limit) {
-            response = await fetch(`${base_url}`);
-            const data = await response.json();
-            return data.length;
-        }
-        else {
-            response = await fetch(`${base_url}?limit=${limit}`);
-            const data = await response.json();
-            return data;
-        }
-
+        response = await fetch(!limit ? `${base_url}` : `${base_url}?limit=${limit}`);
+        const data = await response.json();
+        return data;
     } catch (error) {
         return error.message
     }
-
 }
 
 export async function getProduct(id) {
@@ -28,6 +18,8 @@ export async function getProduct(id) {
         return data;
     }
     catch (error) {
+        console.log(error)
+
         return error.message
     }
 }

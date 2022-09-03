@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { showModalCart } from "../../redux/reducers/cartSlice";
 import { logout } from "../../redux/reducers/userSlice";
 import { notifyLogin, showModalLogin } from "../../redux/reducers/mainSlice";
+import { cartSelector, userSelector } from "../../redux/selectors";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
-  const { totalPrice, amountItems } = useSelector((state) => state.cart);
-  const { name } = useSelector((state) => state.user);
+  const { totalPrice, amountItems } = useSelector(cartSelector);
+  const { name } = useSelector(userSelector);
 
   const showModal = () => {
     name ? dispatch(logout()) : dispatch(showModalLogin(true));
@@ -54,7 +55,7 @@ const HeaderComponent = () => {
           <img src={icon_cart} alt="icon_cart" />
         </button>
         <div style={{ visibility: name ? "visible" : "hidden" }} className={styles.basket}>
-          {`items: ${amountItems} total: ${totalPrice.toFixed(2)}$`}
+          {`items: ${amountItems} total: ${totalPrice.toFixed(2)}$` }
         </div>
         <button type="button" className={styles.btn_chat} onClick={showModal}>
           {name ? "Logout" : "Login"}

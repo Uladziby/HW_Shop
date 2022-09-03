@@ -6,25 +6,25 @@ import styles from "./styles.module.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { notifyLogin } from "../../redux/reducers/mainSlice";
+import { mainSelector } from "../../redux/selectors";
 
 const TIME_SHOWING_ERROR = 10000;
 
 const FooterComponent = () => {
   const dispatch = useDispatch();
-  const isShowNotification = useSelector((state) => state.main.showNotificationMsg);
+  const {showNotificationMsg} = useSelector(mainSelector);
 
-  //useEffect срабатывает 4 раза
   useEffect(() => {
     setTimeout(() => {
       dispatch(notifyLogin(false));
     }, TIME_SHOWING_ERROR);
-  }, [isShowNotification]);
+  }, [showNotificationMsg]);
 
   return (
     <footer className={styles.header}>
       <div className={styles.header__bottom}></div>
       <div className={styles.footer__bottom}>
-        <span className={`${styles.footer_error_msg} ${isShowNotification ? styles.show_err : ""}`}>
+        <span className={`${styles.footer_error_msg} ${showNotificationMsg ? styles.show_err : ""}`}>
           {err_msg}
         </span>
       </div>
