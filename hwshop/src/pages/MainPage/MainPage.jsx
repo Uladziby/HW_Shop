@@ -1,33 +1,50 @@
+/** @format */
+
 import { useState, useEffect } from "react";
-import { getAllProducts } from "../../components/api/api";
 import CardComponent from "../../components/card/card";
 import styles from "./styles.module.css";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../redux/reducers/mainSlice";
+import { mainSelector } from "../../redux/selectors";
+import { LOAD_MORE } from "../../common/constants";
 
-const initialProduct = {
-  category: '',
-  description: "",
-  images: '',
-  price: 0,
-  title: "",
-};
+const INIT_LIMIT = 10;
+const ITEMS_ON_ROW = 5;
 
-const MainPage = ({ handlerShowNotification }) => {
-  const [products, setProducts] = useState([]);
+const MainPage = () => {
+  const [isLoadMore, setLoadMore] = useState(true);
+  const [limit, setLimit] = useState(INIT_LIMIT);
+  const [maxItems, setMaxLimit] = useState(0);
+
+  const dispatch = useDispatch();
+  const { products } = useSelector(mainSelector);
 
   useEffect(() => {
-    getAllProducts()
-    .then((data) => {
-      setProducts(data);
-    })
-  }, []);
+    dispatch(fetchProducts(limit));
+    setMaxLimit(products.length);
+    setLoadMore(() => !(products.length - maxItems === ITEMS_ON_ROW));
+  }, [limit]);
+
+  const handlerLimitItems = () => {
+    setLimit((prev) => prev + ITEMS_ON_ROW);
+  };
 
   return (
     <div className={styles.main}>
       <div className={styles.container}>
         {products.map((item, idx) => {
-          return <CardComponent key={idx} item={item} showNotification={handlerShowNotification} />;
+          return <CardComponent key={idx} item={item} />;
         })}
       </div>
+      <button
+        disabled={!isLoadMore}
+        className={styles.btn_load}
+        style={{ width: "100%", background: `${isLoadMore ? "#66999b" : "grey"}` }}
+        onClick={() => handlerLimitItems()}
+      >
+        {LOAD_MORE}
+      </button>
     </div>
   );
 };

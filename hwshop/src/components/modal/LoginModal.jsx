@@ -1,30 +1,32 @@
-import { Button } from "../../button/button";
-import InputComponent from "../../input/InputComponent";
-import ReactDOM from "react-dom";
-import { useContext, useState } from "react";
-import styles from "./styles.module.css";
-import { AppContext } from "../AppProvider";
-import icon_close from "../../../assets/close_icon.png";
-import { mock_user } from "../mock";
-import { novalid_msg } from "../constants";
+/** @format */
 
-const LoginModalTemplate = ({ closeModal }) => {
+import { Button } from "../button/button";
+import InputComponent from "../input/InputComponent";
+import ReactDOM from "react-dom";
+import { useState } from "react";
+import styles from "./styles.module.css";
+import icon_close from "../../assets/close_icon.png";
+import { mock_user } from "../../common/mock";
+import { novalid_msg } from "../../common/constants";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/reducers/userSlice";
+import { showModalLogin } from "../../redux/reducers/mainSlice";
+import { mainSelector } from "../../redux/selectors";
+
+const LoginModalTemplate = () => {
   const [name, setName] = useState(mock_user.name);
   const [password, setPassword] = useState(mock_user.password);
-  const appContext = useContext(AppContext);
   const [isValidate, setIsValidate] = useState(false);
+  const dispatch = useDispatch();
 
-  const handlerCloseModal = (e) => {
-    e.preventDefault();
-    closeModal();
-  };
   const handlerSubmit = (e) => {
     e.preventDefault();
     if (name !== mock_user.name || password !== mock_user.password) {
       return setIsValidate(true);
     }
-    appContext.setCurrUser(name, password);
-    closeModal();
+    dispatch(login({ name, password }));
+    dispatch(showModalLogin(false));
   };
 
   return (
@@ -34,7 +36,7 @@ const LoginModalTemplate = ({ closeModal }) => {
           <h3>Your Account</h3>
         </div>
         {isValidate && <div className={styles.error_msg}>{novalid_msg}</div>}
-        <button className={styles.close_btn} onClick={handlerCloseModal}>
+        <button className={styles.close_btn} onClick={() => dispatch(showModalLogin(false))}>
           <img src={icon_close} alt="close" width={30} />
         </button>
         <form className={styles.form} onSubmit={handlerSubmit}>
@@ -52,7 +54,11 @@ const LoginModalTemplate = ({ closeModal }) => {
           />
           <div className={styles.form_btns}>
             <Button text={"Sign in"} styleButton={"primary"} type="submit" />
-            <Button text={"Cancel"} styleButton={"add"} onClick={handlerCloseModal} />
+            <Button
+              text={"Cancel"}
+              styleButton={"add"}
+              onClick={() => dispatch(showModalLogin(false))}
+            />
           </div>
         </form>
       </div>
@@ -60,14 +66,14 @@ const LoginModalTemplate = ({ closeModal }) => {
   );
 };
 
-const LoginModal = ({ isShowModal, handlerCloseModal }) => {
+export const LoginModal = () => {
+  const { isShowModalLogin } = useSelector(mainSelector);
+  const dispatch = useDispatch();
   const closeModal = () => {
-    handlerCloseModal();
+    dispatch(showModalLogin(false));
   };
   const rootNode = document.getElementById("root");
-  if (rootNode && isShowModal) {
+  if (rootNode && isShowModalLogin) {
     return ReactDOM.createPortal(<LoginModalTemplate closeModal={closeModal} />, rootNode);
   }
 };
-
-export default LoginModal;
