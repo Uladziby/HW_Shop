@@ -1,0 +1,74 @@
+.header {
+  position: relative;
+  height: 70px;
+  width: 100%;
+}
+.header__top {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  background-color: rgb(40 41 46 / 51%);
+}
+
+.header__bottom {
+  height: 10px;
+  background: #66999b;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.btn_chat {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #66999b;
+  font-size: 2rem;
+}
+.btn_chat:hover {
+  border: 2px solid #66999b;
+}
+
+.navlinks {
+  display: flex;
+  flex: 10;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 2rem;
+  gap: 1rem;
+}
+.navlink {
+  font-size: 3rem;
+  color: white;
+  text-decoration: none;
+}
+.navlink:hover {
+  color: #66999b;
+}
+
+.basket {
+  display: flex;
+  flex: 2 1;
+  align-items: center;
+  justify-content: center;
+  color: #66999b;
+  font-size: 2rem;
+}
+
+.footer_error_msg {
+  font-size: 3rem;
+  color: rgb(255, 44, 44);
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+.show_err {
+  opacity: 1;
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  background-color: rgb(40 41 46 / 51%);
+}

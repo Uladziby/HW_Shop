@@ -1,0 +1,63 @@
+.popup {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(7, 6, 6, 0.4);
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.active {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  transform: scale(1);
+}
+
+.popup_content {
+  opacity: 1;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgb(238, 235, 235);
+  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+}
+.popup_content_block {
+  display: flex;
+  gap: 10px;
+}
+
+.popup_title {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+}
+.form {
+  width: 100%;
+}
+.form_btns {
+  display: flex;
+  justify-content: space-around;
+}
+.close_btn {
+  position: absolute;
+  top: 5%;
+  left: 90%;
+  cursor: pointer;
+  border: none;
+}
+.close_btn:hover {
+  transform: scale(1.1);
+}
+.error_msg {
+  color: red;
+  font-size: 2rem;
+  font-family: "Poppins", sans-serif;
+  padding: 2%;
+}
